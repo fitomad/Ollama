@@ -1,0 +1,33 @@
+{
+  "configurations" : [
+    {
+      "id" : "048922C8-1AC1-4983-8985-AA981EF6076D",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "selectedTags" : {
+        "mode" : "or",
+        "tags" : [
+          ".chatCompletion",
+          ".completion",
+          ".client",
+          ".endpoints"
+        ]
+      },
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "OllamaTests",
+        "name" : "OllamaTests"
+      }
+    }
+  ],
+  "version" : 1
+}
