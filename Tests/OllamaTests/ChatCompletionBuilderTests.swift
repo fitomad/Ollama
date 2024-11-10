@@ -1,8 +1,8 @@
 import Testing
 @testable import Ollama
 
-@Test("Check supported models" , .tags(.chatCompletion), arguments: OllamaModel.allCases)
-func testChatCompletionParameterBuilderModels(model: OllamaModel) {
+@Test("Check supported models" , .tags(.chatCompletion), arguments: [ Model.llama32 ])
+func testChatCompletionParameterBuilderModels(model: Model) {
 	#expect(throws: Never.self) {
 		let parameter = try ChatCompletionRequestBuilder()
 			.withModel(model)

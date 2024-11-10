@@ -9,5 +9,6 @@ import Foundation
 
 public enum OllamaBuilderError: Error {
 	case malformedParameter
+	case nonValidModelFormat
 	case formatUnavailable
 }

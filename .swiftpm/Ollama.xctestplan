@@ -16,8 +16,9 @@
       "selectedTags" : {
         "mode" : "or",
         "tags" : [
-          ".chatCompletion",
+          ".model",
           ".completion",
+          ".chatCompletion",
           ".client",
           ".endpoints"
         ]

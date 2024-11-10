@@ -8,8 +8,8 @@
 import Testing
 @testable import Ollama
 
-@Test("Completion. Model", .tags(.completion), arguments: [ OllamaModel.llama32 ])
-func testCompletionRequestBuilderModel(model: OllamaModel) async throws {
+@Test("Completion. Model", .tags(.completion), arguments: [ Model.llama32 ])
+func testCompletionRequestBuilderModel(model: Model) async throws {
 	#expect(throws: OllamaBuilderError.malformedParameter) {
 		let parameter = try CompletionRequestBuilder()
 			.withModel(model)
@@ -52,8 +52,8 @@ func testCompletionRequestBuilderSystemRawFalse() async throws {
 		.build()
 }
 
-@Test("Completion. Model+Prompt", .tags(.completion), arguments: [ OllamaModel.llama32 ])
-func testCompletionRequestBuilderPrompt(model: OllamaModel) async throws {
+@Test("Completion. Model+Prompt", .tags(.completion), arguments: [ Model.llama32 ])
+func testCompletionRequestBuilderPrompt(model: Model) async throws {
 	let parameter = try CompletionRequestBuilder()
 		.withModel(model)
 		.withPrompt("Where is Spain?")
@@ -63,8 +63,8 @@ func testCompletionRequestBuilderPrompt(model: OllamaModel) async throws {
 	#expect(parameter.prompt?.isEmpty == false)
 }
 
-@Test("Completion. Model+Prompt+Images", .tags(.completion), arguments: [ OllamaModel.llama32 ])
-func testCompletionRequestBuilderImages(model: OllamaModel) async throws {
+@Test("Completion. Model+Prompt+Images", .tags(.completion), arguments: [ Model.llama32 ])
+func testCompletionRequestBuilderImages(model: Model) async throws {
 	guard let fraguaDeVulcano = "Fragua de Vulcano, de Diego Velázquez".data(using: .utf8) else {
 		return
 	}
@@ -82,8 +82,8 @@ func testCompletionRequestBuilderImages(model: OllamaModel) async throws {
 	#expect(parameter.base64Images?.first == encodedFraguaDeVulcano)
 }
 
-@Test("Completion. Model+Prompt+Images+Context", .tags(.completion), arguments: [ OllamaModel.llama32 ])
-func testCompletionRequestBuilderContext(model: OllamaModel) async throws {
+@Test("Completion. Model+Prompt+Images+Context", .tags(.completion), arguments: [ Model.llama32 ])
+func testCompletionRequestBuilderContext(model: Model) async throws {
 	guard let fraguaDeVulcano = "Fragua de Vulcano, de Diego Velázquez".data(using: .utf8) else {
 		return
 	}
@@ -103,8 +103,8 @@ func testCompletionRequestBuilderContext(model: OllamaModel) async throws {
 	#expect(parameter.context?.isEmpty == false)
 }
 
-@Test("Completion. Model+Prompt+Images+Context+System", .tags(.completion), arguments: [ OllamaModel.llama32 ])
-func testCompletionRequestBuilderSystem(model: OllamaModel) async throws {
+@Test("Completion. Model+Prompt+Images+Context+System", .tags(.completion), arguments: [ Model.llama32 ])
+func testCompletionRequestBuilderSystem(model: Model) async throws {
 	guard let fraguaDeVulcano = "Fragua de Vulcano, de Diego Velázquez".data(using: .utf8) else {
 		return
 	}
@@ -126,8 +126,8 @@ func testCompletionRequestBuilderSystem(model: OllamaModel) async throws {
 	#expect(parameter.systemMessage?.isEmpty == false)
 }
 
-@Test("Completion. Model+Prompt+Images+Context+System+Template", .tags(.completion), arguments: [ OllamaModel.llama32 ])
-func testCompletionRequestBuilderTemplate(model: OllamaModel) async throws {
+@Test("Completion. Model+Prompt+Images+Context+System+Template", .tags(.completion), arguments: [ Model.llama32 ])
+func testCompletionRequestBuilderTemplate(model: Model) async throws {
 	guard let fraguaDeVulcano = "Fragua de Vulcano, de Diego Velázquez".data(using: .utf8) else {
 		return
 	}
@@ -151,8 +151,8 @@ func testCompletionRequestBuilderTemplate(model: OllamaModel) async throws {
 	#expect(parameter.template?.isEmpty == false)
 }
 
-@Test("Completion. Model+Prompt+Images+Context+System+Template+Sufix", .tags(.completion), arguments: [ OllamaModel.llama32 ])
-func testCompletionRequestBuilderSyfix(model: OllamaModel) async throws {
+@Test("Completion. Model+Prompt+Images+Context+System+Template+Sufix", .tags(.completion), arguments: [ Model.llama32 ])
+func testCompletionRequestBuilderSyfix(model: Model) async throws {
 	guard let fraguaDeVulcano = "Fragua de Vulcano, de Diego Velázquez".data(using: .utf8) else {
 		return
 	}
@@ -178,8 +178,8 @@ func testCompletionRequestBuilderSyfix(model: OllamaModel) async throws {
 	#expect(parameter.suffix?.isEmpty == false)
 }
 
-@Test("Completion. All", .tags(.completion), arguments: [ OllamaModel.llama32 ])
-func testCompletionRequestBuilderAll(model: OllamaModel) async throws {
+@Test("Completion. All", .tags(.completion), arguments: [ Model.llama32 ])
+func testCompletionRequestBuilderAll(model: Model) async throws {
 	guard let fraguaDeVulcano = "Fragua de Vulcano, de Diego Velázquez".data(using: .utf8) else {
 		return
 	}

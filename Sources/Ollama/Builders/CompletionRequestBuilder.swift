@@ -13,12 +13,18 @@ public final class CompletionRequestBuilder {
 	
 	private var isRawPropertySetted = false
 	
-	public func withModel(_ model: OllamaModel) -> Self {
+	public func withModel(_ model: Model) -> Self {
 		parameter.model = model
 		return self
 	}
 	
-	public func withModel(named value: String) -> Self {
+	public func withModel(named value: String) throws -> Self {
+		guard let model = Model(rawValue: value) else {
+			throw OllamaBuilderError.nonValidModelFormat
+		}
+		
+		parameter.model = model
+		
 		return self
 	}
 	

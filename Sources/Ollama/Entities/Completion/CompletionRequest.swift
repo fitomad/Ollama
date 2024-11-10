@@ -6,7 +6,7 @@
 //
 
 public struct CompletionRequest: Encodable {
-	var model: OllamaModel?
+	var model: Model?
 	var prompt: String?
 	var suffix: String?
 	var base64Images: [String]?

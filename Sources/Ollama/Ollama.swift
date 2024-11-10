@@ -26,13 +26,13 @@ public final class Ollama: Sendable {
 		jsonDecoder.dateDecodingStrategy = .custom(decodeDate)
 	}
 	
-	func performRequest<Output: Decodable>(to endpoint: String, payload: (any Encodable)? = nil, httpMethod: String = "GET") async throws(OllamaError) -> Output {
+	func performRequest<Output: Decodable>(to endpoint: String, payload: (any Encodable)? = nil, httpMethod: HttpMethod = .get) async throws(OllamaError) -> Output {
 		guard let endpointURL = URL(string: endpoint) else {
 			throw .invalidURL(string: endpoint)
 		}
 		
 		var ollamaRequest = URLRequest(url: endpointURL)
-		ollamaRequest.httpMethod = httpMethod
+		ollamaRequest.httpMethod = httpMethod.rawValue
 		
 		if let payload {
 			do {
@@ -53,8 +53,12 @@ public final class Ollama: Sendable {
 				throw OllamaError.invalidResponse(message: "Non valid HTTP response")
 			}
 			
-			let output = try jsonDecoder.decode(Output.self, from: data)
-			return output
+			if data.isEmpty {
+				return OllamaResponse(isOK: true) as! Output
+			} else {
+				let output = try jsonDecoder.decode(Output.self, from: data)
+				return output
+			}
 		} catch let error {
 			debugPrint(error)
 			throw .invalidResponse(message: error.localizedDescription)

@@ -8,7 +8,7 @@
 import Foundation
 
 public struct CompletionResponse: Decodable {
-	public let model: OllamaModel
+	public let model: Model
 	public let createdAt: Date
 	public let response: String
 	public let isDone: Bool

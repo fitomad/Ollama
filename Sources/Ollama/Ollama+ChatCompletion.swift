@@ -13,7 +13,7 @@ extension Ollama {
 	public func chatCompletion(parameter: ChatCompletionRequest) async throws -> ChatCompletionResponse {
 		let response: ChatCompletionResponse = try await performRequest(to: chatCompletionEndpoint,
 																		payload: parameter,
-																		httpMethod: "POST")
+																		httpMethod: .post)
 		
 		return response
 	}
