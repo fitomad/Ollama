@@ -13,7 +13,7 @@ extension Ollama {
 	public func completion(parameter: CompletionRequest) async throws -> CompletionResponse {
 		let response: CompletionResponse = try await performRequest(to: completionEndpoint,
 																	payload: parameter,
-																	httpMethod: "POST")
+																	httpMethod: .post)
 		
 		return response
 	}

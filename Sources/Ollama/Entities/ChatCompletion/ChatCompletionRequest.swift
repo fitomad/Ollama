@@ -6,7 +6,7 @@
 //
 
 public struct ChatCompletionRequest: Encodable {
-	var model: OllamaModel?
+	var model: Model?
 	var messages: [ChatCompletionRequest.Message]?
 	var options: Options?
 	

@@ -8,7 +8,7 @@
 import Foundation
 
 public struct ChatCompletionResponse: Decodable {
-	public let model: OllamaModel
+	public let model: Model
 	public let createdAt: Date
 	public let message: ChatCompletionResponse.Message
 	public let isDone: Bool

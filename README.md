@@ -79,3 +79,22 @@ This project is licensed under the MIT license. See
 ## Acknowledgments
 
 I would like to thank [Ollama API Team](https://ollama.com/) for providing the API endpoint and documentation.
+
+## Version history
+
+### 0.2
+
+- `OllamaModel` enumeration becomes `Model` structure
+
+Added the following endpoints
+
+- Delete model
+
+### 0.1
+
+Support for the following endpoints
+
+- Completion
+- Chat Completion
+- Running models
+- List local models

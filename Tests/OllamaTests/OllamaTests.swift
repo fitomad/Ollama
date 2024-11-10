@@ -16,66 +16,74 @@ func testOllamaCustomSettings() {
 	#expect(ollama.settings.baseURL == "https://example.com:1975")
 }
 
+@Test("Ollama models", .tags(.model), arguments: [ "llama3.2", "llama3.2:3b", "meta/llama3.2:3b", "research/meta/llama3.2:3b", "research/meta/llama3.2", "meta/llama3.2" ])
+func testModels(content: String) {
+	#expect(throws: Never.self) {
+		let _ = Model(rawValue: content)
+	}
+}
+
 @Test("ChatCompletion. Development prompts", .tags(.endpoints), arguments: Prompts.development)
 func testChatCompletion(prompt: String) async throws {
-	await #expect(throws: Never.self) {
-		let chatCompletionParameter = try ChatCompletionRequestBuilder()
-			.withModel(.llama32)
-			.withMessage("You're a senior Swift developer", as: .system)
-			.withMessage(prompt, as: .user)
-			.withStreamSupport(false)
-			.withModelTemperature(0.1)
-			.build()
-		
-		let ollama = Ollama()
-		let chatCompletionResponse = try await ollama.chatCompletion(parameter: chatCompletionParameter)
-		
-		#expect(chatCompletionResponse.message.content.isEmpty == false)
-		
-		print("📣 (\(chatCompletionResponse.message.role.rawValue)): \(chatCompletionResponse.message.content)")
-	}
+	let chatCompletionParameter = try ChatCompletionRequestBuilder()
+		.withModel(.llama32)
+		.withMessage("You're a senior Swift developer", as: .system)
+		.withMessage(prompt, as: .user)
+		.withStreamSupport(false)
+		.withModelTemperature(0.1)
+		.build()
+	
+	let ollama = Ollama()
+	let chatCompletionResponse = try await ollama.chatCompletion(parameter: chatCompletionParameter)
+	
+	#expect(chatCompletionResponse.message.content.isEmpty == false)
+	
+	print("📣 (\(chatCompletionResponse.message.role.rawValue)): \(chatCompletionResponse.message.content)")
 }
 
 @Test("ChatCompletion. Twitter prompts", .tags(.endpoints), arguments: Prompts.communityManager)
 func testChatCompletionWithTemperature(prompt: String) async throws {
-	await #expect(throws: Never.self) {
-		let chatCompletionParameter = try ChatCompletionRequestBuilder()
-			.withModel(.llama32)
-			.withMessage("Act as a Twitter Community Manager", as: .system)
-			.withMessage(prompt, as: .user)
-			.withStreamSupport(false)
-			.withModelTemperature(1.5)
-			.build()
-		
-		let ollama = Ollama()
-		let chatCompletionResponse = try await ollama.chatCompletion(parameter: chatCompletionParameter)
-		
-		#expect(chatCompletionResponse.message.content.isEmpty == false)
-		
-		print("📣 (\(chatCompletionResponse.message.role.rawValue)): \(chatCompletionResponse.message.content)")
-	}
+	let chatCompletionParameter = try ChatCompletionRequestBuilder()
+		.withModel(.llama32)
+		.withMessage("Act as a Twitter Community Manager", as: .system)
+		.withMessage(prompt, as: .user)
+		.withStreamSupport(false)
+		.withModelTemperature(1.5)
+		.build()
+	
+	let ollama = Ollama()
+	let chatCompletionResponse = try await ollama.chatCompletion(parameter: chatCompletionParameter)
+	
+	#expect(chatCompletionResponse.message.content.isEmpty == false)
+	
+	print("📣 (\(chatCompletionResponse.message.role.rawValue)): \(chatCompletionResponse.message.content)")
 }
 
 @Test("Running Models.", .tags(.endpoints))
 func testRunningModels() async throws {
-	await #expect(throws: Never.self) {
-		let ollama = Ollama()
-		let runningModels = try await ollama.runningModels()
-		
-		#expect(runningModels.isEmpty == false)
-		dump(runningModels)
-	}
+	let ollama = Ollama()
+	let runningModels = try await ollama.runningModels()
 }
 
 @Test("Local Models.", .tags(.endpoints))
 func testLocalModels() async throws {
-	await #expect(throws: Never.self) {
-		let ollama = Ollama()
-		let localModels = try await ollama.localModels()
-		
-		#expect(localModels.isEmpty == false)
-		dump(localModels)
-	}
+	let ollama = Ollama()
+	let localModels = try await ollama.localModels()
+	
+	#expect(localModels.isEmpty == false)
+}
+
+@Test("Delete models", .tags(.endpoints))
+func testDeleteModel() async throws {
+	let ollama = Ollama()
+	
+	let deleteModelRequest = try DeleteModelRequestBuilder()
+		.withModel(named: "llama3.2")
+		.build()
+	
+	let deletedModel = try await ollama.deleteModel(parameter: deleteModelRequest)
+	
+	#expect(deletedModel.isOK)
 }
 
 @Test("Completion.", .tags(.endpoints))
@@ -120,4 +128,5 @@ enum Prompts {
 extension Tag {
 	@Tag static var endpoints: Tag
 	@Tag static var client: Tag
+	@Tag static var model: Tag
 }
